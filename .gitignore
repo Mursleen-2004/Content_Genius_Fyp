@@ -24,3 +24,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# local scratch notes containing credentials - never commit
+message.md
+
+# any *.env credential file (e.g. atlas-credentials.env); .env.example is safe and stays tracked
+*.env

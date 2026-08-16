@@ -1,8 +1,13 @@
 import axios from 'axios';
 
-const API_KEY = 'AIzaSyCcK3rNKsjGlMHdYX0dcoBJ_FIHLf2eUls'; // replace if needed
-
 const fetchYouTubeTrends = async () => {
+  const API_KEY = process.env.YOUTUBE_API_KEY;
+
+  if (!API_KEY) {
+    console.error('YOUTUBE_API_KEY is not set; skipping YouTube trends.');
+    return [];
+  }
+
   try {
     const res = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
       params: {
