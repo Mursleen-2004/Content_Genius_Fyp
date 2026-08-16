@@ -36,8 +36,16 @@ Variables, add each of these for **Production** and **Preview**
 - `JWT_SECRET` — use a fresh random value, not the local one
 - `GROQ_API_KEY`
 - `GROQ_MODEL` — optional; defaults to `llama-3.3-70b-versatile`
-- `GEMINI_API_KEY` — from https://aistudio.google.com/apikey, starts with `AIza`
-- `GEMINI_MODEL` — e.g. `gemini-2.5-flash-lite`
+- `GEMINI_API_KEY` — from https://aistudio.google.com/apikey. Newly issued keys
+  start with `AQ.`; older ones start with `AIza`. Both go in the `?key=` query
+  parameter.
+- `GEMINI_MODEL` — `gemini-3.5-flash-lite`. The whole `gemini-2.5-*` family now
+  returns 404 "no longer available to new users" for recently created keys,
+  even though it still appears in the `/models` listing. Note also that
+  `generatePostController.js` calls the `v1` endpoint, and `v1` serves fewer
+  models than `v1beta`: `gemini-flash-lite-latest` works on `v1beta` but 404s
+  on `v1`, whereas `gemini-3.5-flash-lite` works on both. Verify any
+  replacement model against `v1` before setting it.
 - `YOUTUBE_API_KEY` — Google Cloud key with YouTube Data API v3 enabled
 - `CLIENT_URL` — the client's URL, filled in after step 3
 
