@@ -34,11 +34,14 @@ Variables, add each of these for **Production** and **Preview**
 
 - `MONGO_URI`
 - `JWT_SECRET` — use a fresh random value, not the local one
-- `RAPIDAPI_KEY`
 - `GROQ_API_KEY`
-- `GEMINI_API_KEY`
-- `GEMINI_MODEL`
+- `GROQ_MODEL` — optional; defaults to `llama-3.3-70b-versatile`
+- `GEMINI_API_KEY` — from https://aistudio.google.com/apikey, starts with `AIza`
+- `GEMINI_MODEL` — e.g. `gemini-2.5-flash-lite`
+- `YOUTUBE_API_KEY` — Google Cloud key with YouTube Data API v3 enabled
 - `CLIENT_URL` — the client's URL, filled in after step 3
+
+There is no `RAPIDAPI_KEY`: nothing in the codebase reads it.
 
 Do **not** set `PORT`; Vercel manages it.
 
@@ -85,6 +88,14 @@ is blocking the connection.
   caches it across warm invocations.
 - The server keeps no local state or disk writes, which is what makes the
   serverless model safe here.
+- **Reddit trends are disabled in practice.** Reddit now requires OAuth on its
+  JSON endpoints and returns 403 to unauthenticated callers regardless of
+  User-Agent, from local machines and Vercel alike. Restoring the source means
+  registering a Reddit app and adding client credentials. `getTrends` degrades
+  per-source, so Twitter and YouTube still return normally.
+- **Third-party model names go stale.** Groq decommissioned
+  `llama3-70b-8192`; both the Groq and Gemini models are env-configurable so a
+  retirement is a settings change rather than a code edit.
 
 ## Local development
 
